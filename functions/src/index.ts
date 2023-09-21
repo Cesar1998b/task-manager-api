@@ -4,7 +4,7 @@ import * as cors from 'cors';
 import { addTask, getAllTask, updateTask, deleteTask } from './entryController';
 
 const corsOptions = {
-  origin: 'http://localhost:4200',
+  origin: 'https://task-manager-app-rust.vercel.app',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
 };
 
