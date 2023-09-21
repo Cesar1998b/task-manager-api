@@ -13,11 +13,12 @@ const addTask = async (req: Request, res: Response) => {
     const date = admin.firestore.Timestamp.now();
     const currentDate = date.toDate();
     task.created = currentDate;
+    task.completed = false;
     const docRef = await db.collection('tasks').add(task);
     const taskId = docRef.id;
-    res.status(200).json({ message: 'Tarea agregada con éxito', taskId });
+    res.status(200).json({ message: 'Task created successfully', taskId });
   } catch (error) {
-    res.status(500).json({ error: 'Error al agregar la tarea' });
+    res.status(500).json({ error: 'Error creating task' });
   }
 };
 
@@ -34,7 +35,7 @@ const getAllTask = async (req: Request, res: Response) => {
     });
     res.json(tasks);
   } catch (error) {
-    res.status(500).json({ error: 'Error al obtener las tareas' });
+    res.status(500).json({ error: 'Error getting tasks' });
   }
 };
 
@@ -46,9 +47,9 @@ const updateTask = async (req: Request, res: Response) => {
     const currentDate = date.toDate();
     updatedTask.updated = currentDate;
     await db.collection('tasks').doc(taskId).set(updatedTask, { merge: true });
-    res.status(200).json({ message: 'Tarea actualizada con éxito' });
+    res.status(200).json({ message: 'Task updated successfully' });
   } catch (error) {
-    res.status(500).json({ error: 'Error al actualizar la tarea' });
+    res.status(500).json({ error: 'Error updating task' });
   }
 };
 
@@ -56,9 +57,9 @@ const deleteTask = async (req: Request, res: Response) => {
   try {
     const taskId = req.params.taskId;
     await db.collection('tasks').doc(taskId).delete();
-    res.status(200).json({ message: 'Tarea eliminada con éxito' });
+    res.status(200).json({ message: 'Task deleted successfully' });
   } catch (error) {
-    res.status(500).json({ error: 'Error al eliminar la tarea' });
+    res.status(500).json({ error: 'Error deleting task' });
   }
 };
 

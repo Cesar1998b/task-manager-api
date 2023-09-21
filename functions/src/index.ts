@@ -1,8 +1,15 @@
 import * as functions from 'firebase-functions';
 import * as express from 'express';
+import * as cors from 'cors';
 import { addTask, getAllTask, updateTask, deleteTask } from './entryController';
 
+const corsOptions = {
+  origin: 'http://localhost:4200',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+};
+
 const app = express();
+app.use(cors(corsOptions));
 
 app.post('/tasks', addTask);
 app.get('/tasks', getAllTask);
